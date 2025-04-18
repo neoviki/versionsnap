@@ -1,6 +1,7 @@
 ## versionsnap - A Versioning Snapshot Utility
 
-**`versionsnap`** is a utility designed to take snapshots (or copies) of your current working directory (usually a project) into a `versions` directory located within the same project. This utility helps you manage versioning with a simple versioning scheme (e.g., `v0.0.0`, `v0.0.1`, `v0.0.2`, etc.). You can also label your versions with tags (e.g., `v2.1.3.production`), and the tool will handle the versioning accordingly, incrementing the version when required.
+versionsnap is a Linux command-line utility for taking snapshots (copies) of your current directory (usually a project) with version identifiers. Snapshots are saved in a versions directory within the project. It helps manage simple versioning using a format like v0.0.0, v0.0.1, v0.0.2, etc. You can also tag versions (e.g., v2.1.3.production), and the tool will automatically handle version increments as needed.
+
 
 ### Features
 
