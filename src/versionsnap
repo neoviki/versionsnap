@@ -1,0 +1,139 @@
+#!/bin/bash
+#
+# versionsnap: A basic utility to snapshot project versions, excluding specified files / directories
+#
+#
+# MIT License
+# 
+# Copyright (c) 2010 V Natarajan
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+#
+# Website: https://www.viki.design
+#
+
+# Files/directories to exclude from copying into the new version (only if they exist in the root of the source directory)
+exclude_files=(".git" "versions")
+     
+LATEST_PROJECT_SOURCE=$(pwd)
+
+if [[ -z "$1" ]]; then
+    LABEL=""
+else
+    LABEL="$1"
+fi
+
+if [[ -e versions && ! -d versions ]]; then
+    echo "[ ERROR ] A file named 'versions' exists. Remove or rename it, then run the script again."
+    exit 1
+fi
+
+if [[ ! -d versions ]]; then
+    mkdir versions || { echo "[ ERROR ] Creating 'versions' directory - check permission"; exit 1; }
+fi
+
+cd versions || { echo "[ ERROR ] Unable to cd to 'versions' directory - check permission or it might be a file"; exit 1; }
+
+latest_i=0
+latest_j=0
+latest_k=0
+
+# Find the latest version available
+# Enable nullglob to avoid literal pattern when no matches
+shopt -s nullglob
+
+for ((i = 9; i >= 0; i--)); do
+    for ((j = 9; j >= 0; j--)); do
+        for ((k = 9; k >= 0; k--)); do
+            prefix="v${i}.${j}.${k}"
+            # If nothing matches, then matches = () :  empty array [ nullglob setting is important]
+            matches=("${prefix}"*/)
+
+            #Check if any directory starts with "vi.j.k"
+            for dir in "${matches[@]}"; do
+                if [[ -d "$dir" ]]; then
+                    latest_i=$i
+                    latest_j=$j
+                    latest_k=$k
+                    #echo "v${latest_i}.${latest_j}.${latest_k}"
+                    # break all 4 loops
+                    break 4 
+                fi
+            done
+        done
+    done
+done
+
+version_dir="v${latest_i}.${latest_j}.${latest_k}"
+echo "[ LAST VERSION ] $version_dir"
+
+if [[ $latest_i -eq 9 && $latest_j -eq 9 && $latest_k -eq 9 ]]; then
+    echo "[ ERROR1 ] Project version limit exhausted. No available version directory."
+    exit 1
+fi
+
+# Start from the next version
+((latest_k++))
+if [[ $latest_k -gt 9 ]]; then
+    latest_k=0
+    ((latest_j++))
+    if [[ $latest_j -gt 9 ]]; then
+        latest_j=0
+        ((latest_i++))
+        if [[ $latest_i -gt 9 ]]; then
+            echo "[ ERROR2 ] Project version limit exhausted. No available version directory."
+            exit 1
+        fi
+    fi
+fi
+
+# Generate a list of --exclude arguments for rsync
+exclude_files_arg_list=()
+for item in "${exclude_files[@]}"; do
+    exclude_files_arg_list[${#exclude_files_arg_list[@]}]="--exclude=$item"
+done
+
+#echo "DEBUG: Exclude File/Dir list [ ${exclude_files_arg_list[@]} ]"
+
+# Create the next available version
+for ((i = latest_i; i <= 9; i++)); do
+    for ((j = latest_j; j <= 9; j++)); do
+        for ((k = latest_k; k <= 9; k++)); do    
+            version_dir="v${i}.${j}.${k}"
+           
+            #if label field is present
+            [[ ! -z "$LABEL" ] && version_dir="v${i}.${j}.${k}.${LABEL}"
+            
+            if [[ ! -d $version_dir ]]; then
+                echo "[ NEW VERSION  ] $version_dir"
+                echo "[ CREATE DIR   ] $version_dir"
+                mkdir "$version_dir"
+                echo "[ COPY DIR     ] $version_dir"
+                rsync -av "${exclude_files_arg_list[@]}" "$LATEST_PROJECT_SOURCE"/* "$version_dir"/
+                echo "[ VERSION DIR  ] $(pwd)/$version_dir"
+                echo "[ INFO         ] You can also call this utility with a label ( ex: versionsnap production/staging )"
+                exit 0
+            fi
+        done
+    done
+done
+
+echo "[ ERROR3 ] Project version limit exhausted. No available version directory."
+
