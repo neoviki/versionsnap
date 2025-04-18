@@ -10,6 +10,8 @@ versionsnap is a Linux command-line utility for taking snapshots (copies) of you
 - **Version Labeling**: Supports version labeling for different environments or stages (e.g., `v2.1.3.production`, `v2.1.4.staging`).
 - **Incremental Versioning**: Handles automatic version increment.
 
+---
+
 ### How It Works
 
 1. **Version Snapshot**: The tool creates a snapshot of the current working directory and stores it under the `versions` directory.
