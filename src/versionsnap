@@ -119,7 +119,7 @@ for ((i = latest_i; i <= 9; i++)); do
             version_dir="v${i}.${j}.${k}"
            
             #if label field is present
-            [[ ! -z "$LABEL" ] && version_dir="v${i}.${j}.${k}.${LABEL}"
+            [[ ! -z "$LABEL" ]] && version_dir="v${i}.${j}.${k}.${LABEL}"
             
             if [[ ! -d $version_dir ]]; then
                 echo "[ NEW VERSION  ] $version_dir"
