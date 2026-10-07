@@ -244,4 +244,4 @@ Project: <https://github.com/neoviki/versionsnap>
 
 ## Acknowledgements
 
-The Python version was implemented with the help of LLM tools.
+The Python version was implemented with the help of LLM tools, mainly Claude (Anthropic) and, to a smaller extent, Qwen (Alibaba Cloud). The behaviour is covered by the included unit tests.

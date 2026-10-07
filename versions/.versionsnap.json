@@ -1,0 +1,18 @@
+{
+  "head": "v0.0.1",
+  "next_order": 2,
+  "versions": {
+    "v0.0.1": {
+      "parent": null,
+      "created": "2026-10-07T22:30:31",
+      "label": "",
+      "dir": "v0.0.1",
+      "order": 1,
+      "files": 17,
+      "size": 73599,
+      "added": 17,
+      "modified": 0,
+      "deleted": 0
+    }
+  }
+}
