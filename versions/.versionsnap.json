@@ -1,0 +1,78 @@
+{
+  "head": "v0.0.6",
+  "next_order": 7,
+  "versions": {
+    "v0.0.1": {
+      "parent": null,
+      "created": "2026-10-07T21:43:48",
+      "label": "",
+      "dir": "v0.0.1",
+      "order": 1,
+      "files": 32,
+      "size": 79698,
+      "added": 32,
+      "modified": 0,
+      "deleted": 0
+    },
+    "v0.0.2": {
+      "parent": "v0.0.1",
+      "created": "2026-10-07T21:44:42",
+      "label": "",
+      "dir": "v0.0.2",
+      "order": 2,
+      "files": 31,
+      "size": 79678,
+      "added": 0,
+      "modified": 0,
+      "deleted": 1
+    },
+    "v0.0.3": {
+      "parent": "v0.0.2",
+      "created": "2026-10-07T21:50:08",
+      "label": "",
+      "dir": "v0.0.3",
+      "order": 3,
+      "files": 31,
+      "size": 81444,
+      "added": 0,
+      "modified": 2,
+      "deleted": 0
+    },
+    "v0.0.4": {
+      "parent": "v0.0.3",
+      "created": "2026-10-07T22:00:13",
+      "label": "",
+      "dir": "v0.0.4",
+      "order": 4,
+      "files": 39,
+      "size": 283097,
+      "added": 8,
+      "modified": 2,
+      "deleted": 0
+    },
+    "v0.0.5": {
+      "parent": "v0.0.4",
+      "created": "2026-10-07T22:04:00",
+      "label": "",
+      "dir": "v0.0.5",
+      "order": 5,
+      "files": 35,
+      "size": 209132,
+      "added": 0,
+      "modified": 3,
+      "deleted": 4
+    },
+    "v0.0.6": {
+      "parent": "v0.0.5",
+      "created": "2026-10-07T22:14:16",
+      "label": "",
+      "dir": "v0.0.6",
+      "order": 6,
+      "files": 35,
+      "size": 210835,
+      "added": 0,
+      "modified": 4,
+      "deleted": 0
+    }
+  }
+}

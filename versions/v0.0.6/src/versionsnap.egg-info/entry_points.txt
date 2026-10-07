@@ -1,0 +1,2 @@
+[console_scripts]
+versionsnap = versionsnap.cli:main

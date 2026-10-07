@@ -1,0 +1,13 @@
+LICENCE
+README.md
+pyproject.toml
+src/versionsnap/__init__.py
+src/versionsnap/__main__.py
+src/versionsnap/cli.py
+src/versionsnap/store.py
+src/versionsnap.egg-info/PKG-INFO
+src/versionsnap.egg-info/SOURCES.txt
+src/versionsnap.egg-info/dependency_links.txt
+src/versionsnap.egg-info/entry_points.txt
+src/versionsnap.egg-info/requires.txt
+src/versionsnap.egg-info/top_level.txt
